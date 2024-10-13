@@ -1,7 +1,7 @@
 import './App.css';
 
 const App = () => {
-  const message = `Hello, world! ${process.env.API_URL ?? 'undefined'}`; 
+  const message = `Hello, world! ${process.env.REACT_APP_API_URL ?? 'undefined'}`; 
 
   return (
     <>
