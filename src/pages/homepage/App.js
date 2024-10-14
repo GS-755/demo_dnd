@@ -4,6 +4,11 @@ import MotelCard from "../../components/motelcard";
 import { fetchMotels } from "../../services/api";
 import "./App.css";
 import DropDown from "../../components/dropdown";
+import { Responsive, WidthProvider } from "react-grid-layout";
+import "react-grid-layout/css/styles.css";
+import "react-resizable/css/styles.css";
+
+const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const App = () => {
   /* Cards size mode state Start */
@@ -59,6 +64,26 @@ const App = () => {
     return <h3 className="text-center m-3">Đã có lỗi xảy ra 😢</h3>;
   }
   /* Motels state end */
+  /* Grid provider start */
+  const generateLayout = (motels) => {
+    return motels.map((_, index) => ({
+      i: index.toString(),
+      x: (index % 4) * 3,
+      y: Math.floor(index / 4) * 4,
+      w: 3,
+      h: 4,
+      minW: 3,
+      maxW: 12,
+    }));
+  };
+
+  const layouts = {
+    lg: generateLayout(motels),
+    md: generateLayout(motels),
+    sm: generateLayout(motels),
+    xs: generateLayout(motels),
+  };
+  /* Grid provider end */
 
   return (
     <section className="section">
@@ -73,7 +98,7 @@ const App = () => {
               data={cardSizes}
               styles={{ width: "7rem" }}
               action={(newGuiMode) => {
-                handleGuiModeSelect(newGuiMode); 
+                handleGuiModeSelect(newGuiMode);
                 console.log(newGuiMode);
               }}
             />
@@ -84,7 +109,19 @@ const App = () => {
         </div>
       </div>
       <div className="container-fluid">
-        <div className="row">
+        <ResponsiveGridLayout
+          className="layout"
+          layouts={layouts}
+          breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480 }}
+          cols={{ lg: 12, md: 9, sm: 6, xs: 3 }}
+          rowHeight={100}
+          isResizable={false}
+          compactType="horizontal"
+          preventCollision={false}
+          onLayoutChange={(layout, layouts) => {
+            // You can save the new layout here if needed
+          }}
+        >
           {motels.length > 0 ? (
             motels.map((motel, index) => (
               <div key={index} className="mb-4">
@@ -94,7 +131,7 @@ const App = () => {
           ) : (
             <h4 className="text-red m-3">Không có phòng trọ nào được đăng!</h4>
           )}
-        </div>
+        </ResponsiveGridLayout>
       </div>
     </section>
   );
