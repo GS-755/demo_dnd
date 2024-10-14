@@ -12,7 +12,7 @@ const MotelCard = ({ data, guiMode }) => {
           <div className="card mb-3">
             <img
               src={imageUrl + data.MaPT}
-              className="card-img-top p-4"
+              className="card-img-top p-4 object-fit-cover"
               alt={data.TieuDe}
             />
             <div className="card-body d-flex flex-column">
@@ -63,8 +63,9 @@ const MotelCard = ({ data, guiMode }) => {
         <div className="card h-100">
           <img
             src={imageUrl + data.MaPT}
-            className="card-img-top p-4"
-            alt={data.TieuDe}
+            className="card-img-top p-4 object-fit-cover"
+            alt={data.TieuDe} 
+            height={220}
           />
           <div className="card-body">
             <h5 className="card-title font-weight-bold">{data.TieuDe}</h5>
